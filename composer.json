@@ -1,0 +1,18 @@
+{
+  "name": "codeup/php-enum",
+  "type": "library",
+  "description": "Enums for PHP",
+  "homepage": "https://github.com/codeup-berlin/php-enum",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Codeup\\Enum\\": "src"
+    }
+  },
+  "require": {
+    "php": "^7.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.0"
+  }
+}
