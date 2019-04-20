@@ -2,6 +2,9 @@
 
 namespace Codeup\Enum\Reflection;
 
+use DomainException;
+use ReflectionClass;
+
 class Enum implements \Codeup\Enum\Enum
 {
     /**
@@ -17,7 +20,7 @@ class Enum implements \Codeup\Enum\Enum
         if (in_array($value, $this->getValidValues(), true)) {
             $this->value = $value;
         } else {
-            throw new \DomainException(sprintf(
+            throw new DomainException(sprintf(
                 'Value not known for Enum \\%s: %s', get_class($this), $value
             ));
         }
@@ -36,7 +39,7 @@ class Enum implements \Codeup\Enum\Enum
         $class = get_class($this);
         if (!isset(self::$reflectedEnumValues[$class])) {
             /** @noinspection PhpUnhandledExceptionInspection */
-            $reflection = new \ReflectionClass($class);
+            $reflection = new ReflectionClass($class);
             self::$reflectedEnumValues[$class] = [];
             foreach (array_values($reflection->getConstants()) as $value) {
                 self::$reflectedEnumValues[$class][] = (string)$value;
@@ -49,7 +52,7 @@ class Enum implements \Codeup\Enum\Enum
     /**
      * @return string
      */
-    public function __toString(): string
+    public final function __toString(): string
     {
         return $this->value;
     }
@@ -58,7 +61,7 @@ class Enum implements \Codeup\Enum\Enum
      * @param string $value
      * @return bool
      */
-    public function is(string $value): bool
+    public final function is(string $value): bool
     {
         return $value === $this->value;
     }
@@ -67,7 +70,7 @@ class Enum implements \Codeup\Enum\Enum
      * @param \Codeup\Enum\Enum $enum
      * @return bool
      */
-    public function equals(\Codeup\Enum\Enum $enum): bool
+    public final function equals(\Codeup\Enum\Enum $enum): bool
     {
         return $enum->__toString() === $this->value;
     }
