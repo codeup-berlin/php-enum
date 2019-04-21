@@ -2,6 +2,9 @@
 
 namespace Codeup\Enum\Reflection;
 
+use DomainException;
+use PHPUnit\Framework\TestCase;
+
 class TestEnum extends Enum {
     const SOME_VALUE = 'some value';
     const ANOTHER_VALUE = 'another value';
@@ -12,17 +15,24 @@ class TestEnum extends Enum {
 }
 
 class TestEnum2 extends Enum {
-    const SOME_VALUE = 'some other value';
+    const SOME_VALUE = 'some value';
+    const ANOTHER_VALUE = 'another value';
+    const INT_VALUE = 42;
+    const FALSE_VALUE = false;
+    const TRUE_VALUE = true;
+    const FLOAT_VALUE = 1.23;
+    //
+    const SOME_OTHER_VALUE = 'some other value';
 }
 
-class EnumTest extends \PHPUnit\Framework\TestCase
+class EnumTest extends TestCase
 {
     /**
      * @test
      */
     public function __construct_invalid()
     {
-        $this->expectException(\DomainException::class);
+        $this->expectException(DomainException::class);
         new TestEnum('unknown');
     }
 
@@ -32,7 +42,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     public function __construct_validStringEnum()
     {
         $enum1 = new TestEnum(TestEnum::SOME_VALUE);
-        $enum2 = new TestEnum2(TestEnum2::SOME_VALUE);
+        $enum2 = new TestEnum2(TestEnum2::SOME_OTHER_VALUE);
         $this->assertNotEquals($enum1, $enum2);
     }
 
@@ -85,7 +95,22 @@ class EnumTest extends \PHPUnit\Framework\TestCase
      * @dataProvider provideTestEnumValues
      * @param string|int|bool|float $enumValue
      */
-    public function equals_equalValues($enumValue)
+    public function equals_sameInstance($enumValue)
+    {
+        // prepare
+        $enum = new TestEnum($enumValue);
+        // test
+        $result = $enum->equals($enum);
+        // verify
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @test
+     * @dataProvider provideTestEnumValues
+     * @param string|int|bool|float $enumValue
+     */
+    public function equals_sameValuesSameClasses($enumValue)
     {
         // prepare
         $enum1 = new TestEnum($enumValue);
@@ -98,13 +123,28 @@ class EnumTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @test
-     * @dataProvider provideTestEnumValues
      */
     public function equals_differentValues()
     {
         // prepare
         $enum1 = new TestEnum(TestEnum::SOME_VALUE);
         $enum2 = new TestEnum(TestEnum::ANOTHER_VALUE);
+        // test
+        $result = $enum1->equals($enum2);
+        // verify
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @test
+     * @dataProvider provideTestEnumValues
+     * @param string|int|bool|float $enumValue
+     */
+    public function equals_sameValuesDifferentClasses($enumValue)
+    {
+        // prepare
+        $enum1 = new TestEnum($enumValue);
+        $enum2 = new TestEnum2($enumValue);
         // test
         $result = $enum1->equals($enum2);
         // verify

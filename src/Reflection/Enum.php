@@ -72,6 +72,7 @@ class Enum implements \Codeup\Enum\Enum
      */
     public final function equals(\Codeup\Enum\Enum $enum): bool
     {
-        return $enum->__toString() === $this->value;
+        return $enum === $this
+            || get_class($enum) === get_class($this) && (string)$enum === (string)$this;
     }
 }
