@@ -3,7 +3,9 @@
 namespace Codeup\Enum\Reflection;
 
 use DomainException;
+use LogicException;
 use ReflectionClass;
+use ReflectionException;
 
 class Enum implements \Codeup\Enum\Enum
 {
@@ -38,8 +40,11 @@ class Enum implements \Codeup\Enum\Enum
     {
         $class = get_class($this);
         if (!isset(self::$reflectedEnumValues[$class])) {
-            /** @noinspection PhpUnhandledExceptionInspection */
-            $reflection = new ReflectionClass($class);
+            try {
+                $reflection = new ReflectionClass($class);
+            } catch (ReflectionException $e) {
+                throw new LogicException($e->getMessage(), $e->getCode(), $e);
+            }
             self::$reflectedEnumValues[$class] = [];
             foreach (array_values($reflection->getConstants()) as $value) {
                 self::$reflectedEnumValues[$class][] = (string)$value;
