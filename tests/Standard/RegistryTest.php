@@ -9,12 +9,19 @@ use PHPUnit\Framework\TestCase;
 class TestEnum implements Enum
 {
     const SOME_VALUE = 'some value';
+    const SOME_OTHER_VALUE = 'some other value';
+
+    /**
+     * @var string
+     */
+    private $value;
 
     /**
      * @param string $value
      */
     public function __construct(string $value)
     {
+        $this->value = $value;
     }
 
     /**
@@ -22,7 +29,7 @@ class TestEnum implements Enum
      */
     public function __toString(): string
     {
-        return '';
+        return $this->value;
     }
 
     /**
@@ -31,7 +38,7 @@ class TestEnum implements Enum
      */
     public function is(string $value): bool
     {
-        return false;
+        return $this->__toString() === $value;
     }
 
     /**
@@ -40,7 +47,7 @@ class TestEnum implements Enum
      */
     public function equals(Enum $enum): bool
     {
-        return false;
+        return $this === $enum;
     }
 }
 
@@ -94,5 +101,19 @@ class RegistryTest extends TestCase
         $result = $this->classUnderTest->getEnum(TestEnum::class, TestEnum::SOME_VALUE);
         $result2 = $this->classUnderTest->getEnum(TestEnum::class, TestEnum::SOME_VALUE);
         $this->assertSame($result, $result2);
+        $this->assertSame(TestEnum::SOME_VALUE, (string)$result);
+        $this->assertSame(TestEnum::SOME_VALUE, (string)$result2);
+    }
+
+    /**
+     * @test
+     */
+    public function get_multipleWithDifferentEnum()
+    {
+        $result = $this->classUnderTest->getEnum(TestEnum::class, TestEnum::SOME_VALUE);
+        $result2 = $this->classUnderTest->getEnum(TestEnum::class, TestEnum::SOME_OTHER_VALUE);
+        $this->assertNotSame($result, $result2);
+        $this->assertSame(TestEnum::SOME_VALUE, (string)$result);
+        $this->assertSame(TestEnum::SOME_OTHER_VALUE, (string)$result2);
     }
 }

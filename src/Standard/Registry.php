@@ -8,7 +8,7 @@ use InvalidArgumentException;
 class Registry implements \Codeup\Enum\Registry
 {
     /**
-     * @var \Codeup\Enum\Enum[]
+     * @var \Codeup\Enum\Enum[][]
      */
     private $instances = [];
 
@@ -28,9 +28,9 @@ class Registry implements \Codeup\Enum\Registry
                 Enum::class, $enumClassName
             ));
         }
-        if (!isset($this->instances[$enumClassName])) {
-            $this->instances[$enumClassName] = new $enumClassName($enumValue);
+        if (!isset($this->instances[$enumClassName][$enumValue])) {
+            $this->instances[$enumClassName][$enumValue] = new $enumClassName($enumValue);
         }
-        return $this->instances[$enumClassName];
+        return $this->instances[$enumClassName][$enumValue];
     }
 }
