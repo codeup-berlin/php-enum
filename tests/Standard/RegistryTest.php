@@ -25,6 +25,17 @@ class TestEnum implements Enum
     }
 
     /**
+     * @return string[]
+     */
+    public static function getEnumValues(): array
+    {
+        return [
+            self::SOME_VALUE,
+            self::SOME_OTHER_VALUE,
+        ];
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string

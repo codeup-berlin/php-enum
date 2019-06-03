@@ -19,7 +19,7 @@ class Enum implements \Codeup\Enum\Enum
      */
     public function __construct(string $value)
     {
-        if (in_array($value, $this->getValidValues(), true)) {
+        if (in_array($value, static::getEnumValues(), true)) {
             $this->value = $value;
         } else {
             throw new DomainException(sprintf(
@@ -36,9 +36,9 @@ class Enum implements \Codeup\Enum\Enum
     /**
      * @return string[]
      */
-    private function getValidValues(): array
+    public static function getEnumValues(): array
     {
-        $class = get_class($this);
+        $class = get_called_class();
         if (!isset(self::$reflectedEnumValues[$class])) {
             try {
                 $reflection = new ReflectionClass($class);

@@ -150,4 +150,35 @@ class EnumTest extends TestCase
         // verify
         $this->assertFalse($result);
     }
+
+    /**
+     * @test
+     */
+    public function getEnumValues()
+    {
+        // prepare
+        $expectedResult1 = [
+            (string)TestEnum::SOME_VALUE,
+            (string)TestEnum::ANOTHER_VALUE,
+            (string)TestEnum::INT_VALUE,
+            (string)TestEnum::FALSE_VALUE,
+            (string)TestEnum::TRUE_VALUE,
+            (string)TestEnum::FLOAT_VALUE,
+        ];
+        $expectedResult2 = [
+            (string)TestEnum2::SOME_VALUE,
+            (string)TestEnum2::ANOTHER_VALUE,
+            (string)TestEnum2::INT_VALUE,
+            (string)TestEnum2::FALSE_VALUE,
+            (string)TestEnum2::TRUE_VALUE,
+            (string)TestEnum2::FLOAT_VALUE,
+            (string)TestEnum2::SOME_OTHER_VALUE,
+        ];
+        // test
+        $result1 = TestEnum::getEnumValues();
+        $result2 = TestEnum2::getEnumValues();
+        // verify
+        $this->assertSame($result1, $expectedResult1);
+        $this->assertSame($result2, $expectedResult2);
+    }
 }

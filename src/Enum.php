@@ -10,6 +10,11 @@ interface Enum
     public function __construct(string $value);
 
     /**
+     * @return string[]
+     */
+    public static function getEnumValues(): array;
+
+    /**
      * @return string
      */
     public function __toString(): string;
