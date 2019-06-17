@@ -60,6 +60,14 @@ class TestEnum implements Enum
     {
         return $this === $enum;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function jsonSerialize(): string
+    {
+        return $this->value;
+    }
 }
 
 class RegistryTest extends TestCase

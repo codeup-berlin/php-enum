@@ -2,7 +2,9 @@
 
 namespace Codeup\Enum;
 
-interface Enum
+use JsonSerializable;
+
+interface Enum extends JsonSerializable
 {
     /**
      * @param string $value
@@ -30,4 +32,9 @@ interface Enum
      * @return bool
      */
     public function equals(Enum $enum): bool;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function jsonSerialize(): string;
 }

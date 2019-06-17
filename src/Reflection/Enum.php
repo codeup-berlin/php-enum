@@ -80,4 +80,12 @@ class Enum implements \Codeup\Enum\Enum
         return $enum === $this
             || get_class($enum) === get_class($this) && (string)$enum === (string)$this;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function jsonSerialize(): string
+    {
+        return $this->value;
+    }
 }
