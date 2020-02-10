@@ -57,7 +57,7 @@ class Enum implements \Codeup\Enum\Enum
     /**
      * @return string
      */
-    public final function __toString(): string
+    public function __toString(): string
     {
         return $this->value;
     }
@@ -66,7 +66,7 @@ class Enum implements \Codeup\Enum\Enum
      * @param string $value
      * @return bool
      */
-    public final function is(string $value): bool
+    public function is(string $value): bool
     {
         return $value === $this->value;
     }
@@ -75,7 +75,7 @@ class Enum implements \Codeup\Enum\Enum
      * @param \Codeup\Enum\Enum $enum
      * @return bool
      */
-    public final function equals(\Codeup\Enum\Enum $enum): bool
+    public function equals(\Codeup\Enum\Enum $enum): bool
     {
         return $enum === $this
             || get_class($enum) === get_class($this) && (string)$enum === (string)$this;
