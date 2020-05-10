@@ -73,7 +73,7 @@ class TestEnum implements Enum
 class RegistryTest extends TestCase
 {
     /**
-     * @var Registry
+     * @var EnumRegistry
      */
     private $classUnderTest;
 
@@ -82,7 +82,7 @@ class RegistryTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->classUnderTest = new Registry();
+        $this->classUnderTest = new EnumRegistry();
     }
 
     /**

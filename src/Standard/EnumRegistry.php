@@ -5,7 +5,7 @@ namespace Codeup\Enum\Standard;
 use Codeup\Enum\Enum;
 use InvalidArgumentException;
 
-class Registry implements \Codeup\Enum\Registry
+class EnumRegistry implements \Codeup\Enum\EnumRegistry
 {
     /**
      * @var \Codeup\Enum\Enum[][]

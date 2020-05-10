@@ -9,9 +9,9 @@ function php_enum_di_default()
 {
     $diConfig = [];
 
-    $diConfig[\Codeup\Enum\Registry::class] = [
+    $diConfig[\Codeup\Enum\EnumRegistry::class] = [
         'shared' => true,
-        'className' => \Codeup\Enum\Standard\Registry::class,
+        'className' => \Codeup\Enum\Standard\EnumRegistry::class,
     ];
 
     return $diConfig;

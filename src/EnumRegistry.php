@@ -2,7 +2,7 @@
 
 namespace Codeup\Enum;
 
-interface Registry
+interface EnumRegistry
 {
     /**
      * @param string $enumClassName
