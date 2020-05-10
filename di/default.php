@@ -14,6 +14,11 @@ function php_enum_di_default()
         'className' => \Codeup\Enum\Standard\EnumRegistry::class,
     ];
 
+    $diConfig[\Codeup\Enum\Registry::class] = [
+        'shared' => true,
+        'className' => \Codeup\Enum\Standard\EnumRegistry::class,
+    ];
+
     return $diConfig;
 };
 return php_enum_di_default();
