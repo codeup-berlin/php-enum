@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Codeup\Enum;
 
 use DomainException;
@@ -10,6 +12,32 @@ abstract class BaseEnum implements Enum
      * @var string
      */
     private $value;
+
+    /**
+     * @var array<string, array<string, Enum>>
+     */
+    private static $registry = [];
+
+    /**
+     * @return void
+     */
+    protected static function clearRegistry(): void
+    {
+        self::$registry = [];
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public static function with(string $value): Enum
+    {
+        $class = get_called_class();
+        if (!isset(self::$registry[$class][$value])) {
+            self::$registry[$class][$value] = new static($value);
+        }
+        return self::$registry[$class][$value];
+    }
 
     /**
      * @param string $value

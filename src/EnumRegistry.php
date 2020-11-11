@@ -1,7 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Codeup\Enum;
 
+/**
+ * @deprecated in favor of \Codeup\Enum\BaseEnum::with()
+ */
 interface EnumRegistry
 {
     /**

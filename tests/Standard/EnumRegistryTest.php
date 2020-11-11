@@ -4,6 +4,7 @@ namespace Codeup\Enum\Standard;
 
 use Codeup\Enum\Enum;
 use InvalidArgumentException;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 
 class TestEnum implements Enum
@@ -67,6 +68,15 @@ class TestEnum implements Enum
     public function jsonSerialize(): string
     {
         return $this->value;
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public static function with(string $value): Enum
+    {
+        throw new LogicException('Not implemented.');
     }
 }
 

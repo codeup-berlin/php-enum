@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Codeup\Enum;
 
 use JsonSerializable;
@@ -8,8 +10,9 @@ interface Enum extends JsonSerializable
 {
     /**
      * @param string $value
+     * @return $this
      */
-    public function __construct(string $value);
+    public static function with(string $value): Enum;
 
     /**
      * @return string[]

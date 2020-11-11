@@ -1,10 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Codeup\Enum\Standard;
 
 use Codeup\Enum\Enum;
 use InvalidArgumentException;
 
+/**
+ * @deprecated in favor of \Codeup\Enum\BaseEnum::with()
+ */
 class EnumRegistry implements \Codeup\Enum\EnumRegistry
 {
     /**
