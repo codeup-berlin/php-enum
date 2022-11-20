@@ -27,8 +27,17 @@ class TestEnum implements Enum
 
     /**
      * @return string[]
+     * @deprecated in favor of values(), will be removed with PHP 8.1 native enum support
      */
     public static function getEnumValues(): array
+    {
+        return self::values();
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function values(): array
     {
         return [
             self::SOME_VALUE,
@@ -38,8 +47,17 @@ class TestEnum implements Enum
 
     /**
      * @return string
+     * @deprecated in favor of asString(), will be removed with PHP 8.1 native enum support
      */
     public function __toString(): string
+    {
+        return $this->asString();
+    }
+
+    /**
+     * @return string
+     */
+    public function asString(): string
     {
         return $this->value;
     }
@@ -73,8 +91,18 @@ class TestEnum implements Enum
     /**
      * @param string $value
      * @return $this
+     * @deprecated in favor of from(), will be removed with PHP 8.1 native enum support
      */
     public static function with(string $value): Enum
+    {
+        return self::from($value);
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public static function from(string $value): Enum
     {
         throw new LogicException('Not implemented.');
     }

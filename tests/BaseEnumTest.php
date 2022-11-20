@@ -10,8 +10,16 @@ class TestEnum extends BaseEnum {
     const ANOTHER_VALUE = 'another value';
     /**
      * @return string[]
+     * @deprecated in favor of values(), will be removed with PHP 8.1 native enum support
      */
     public static function getEnumValues(): array
+    {
+        return self::values();
+    }
+    /**
+     * @return string[]
+     */
+    public static function values(): array
     {
         return [
             self::SOME_VALUE,
@@ -32,8 +40,16 @@ class TestEnum2 extends BaseEnum {
     const A_VERY_OTHER_VALUE = 'a very other value';
     /**
      * @return string[]
+     * @deprecated in favor of values(), will be removed with PHP 8.1 native enum support
      */
     public static function getEnumValues(): array
+    {
+        return self::values();
+    }
+    /**
+     * @return string[]
+     */
+    public static function values(): array
     {
         return [
             self::SOME_VALUE,
