@@ -34,7 +34,7 @@ Prepares enhancement of native PHP enums by easy string representation handling.
 
 ```PHP
 class SomeEnum implements \Codeup\Enum\Enum {
-    use \Codeup\Enum\StringBacked;
+    use \Codeup\Enum\StringBackedEnum;
 
     const SOME_VALUE = 'someValue';
     const ANOTHER_VALUE = 'anotherValue';

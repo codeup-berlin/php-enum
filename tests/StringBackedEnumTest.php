@@ -6,7 +6,7 @@ use DomainException;
 use PHPUnit\Framework\TestCase;
 
 class StringBackedTestEnum implements Enum {
-    use StringBacked;
+    use StringBackedEnum;
 
     const SOME_VALUE = 'some value';
     const ANOTHER_VALUE = 'another value';
@@ -38,7 +38,7 @@ class StringBackedTestEnum implements Enum {
 }
 
 class StringBackedTestEnum2 implements Enum {
-    use StringBacked;
+    use StringBackedEnum;
 
     const SOME_VALUE = 'some value';
     const A_VERY_OTHER_VALUE = 'a very other value';
@@ -69,7 +69,7 @@ class StringBackedTestEnum2 implements Enum {
     }
 }
 
-class StringBackedTest extends TestCase
+class StringBackedEnumTest extends TestCase
 {
     /**
      * @return void

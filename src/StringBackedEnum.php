@@ -6,7 +6,7 @@ namespace Codeup\Enum;
 
 use Codeup\Enum\Reflection\EnumTrait;
 
-trait StringBacked
+trait StringBackedEnum
 {
     use BaseEnumTrait, EnumTrait;
 }
