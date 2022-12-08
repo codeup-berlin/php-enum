@@ -33,8 +33,8 @@ $enum1->is(SomeEnum::SOME_VALUE); // true
 Prepares enhancement of native PHP enums by easy string representation handling.
 
 ```PHP
-class SomeEnum implements \Codeup\Enum\Enum {
-    use \Codeup\Enum\StringBackedEnum;
+class SomeEnum implements \Codeup\Enum\EnhancedNativeEnum {
+    use \Codeup\Enum\EnhancedNativeEnum;
 
     const SOME_VALUE = 'someValue';
     const ANOTHER_VALUE = 'anotherValue';

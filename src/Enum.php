@@ -4,39 +4,27 @@ declare(strict_types=1);
 
 namespace Codeup\Enum;
 
+use BackedEnum;
 use JsonSerializable;
 
 interface Enum extends JsonSerializable
 {
     /**
-     * @param string $value
-     * @return $this
-     * @deprecated in favor of from(), will be removed with PHP 8.1 native enum support
+     * @return BackedEnum[]
      */
-    public static function with(string $value): Enum;
+    public static function cases(): array;
 
     /**
-     * @param string $value
-     * @return $this
+     * @param string|BackedEnum $value
+     * @return static
      */
-    public static function from(string $value): Enum;
+    public static function from(string|BackedEnum $value): static;
 
     /**
-     * @return string[]
-     * @deprecated in favor of values(), will be removed with PHP 8.1 native enum support
+     * @param string|BackedEnum $value
+     * @return static|null
      */
-    public static function getEnumValues(): array;
-
-    /**
-     * @return string[]
-     */
-    public static function values(): array;
-
-    /**
-     * @return string
-     * @deprecated in favor of asString(), will be removed with PHP 8.1 native enum support
-     */
-    public function __toString(): string;
+    public static function tryFrom(string|BackedEnum $value): ?static;
 
     /**
      * @return string
@@ -44,19 +32,17 @@ interface Enum extends JsonSerializable
     public function asString(): string;
 
     /**
-     * @param string $value
-     * @return bool
+     * @return BackedEnum
      */
-    public function is(string $value): bool;
+    public function asEnum(): BackedEnum;
+    /**
+     * @return string[]
+     */
+    public static function values(): array;
 
     /**
-     * @param \Codeup\Enum\Enum $enum
+     * @param string|BackedEnum|Enum $value
      * @return bool
      */
-    public function equals(Enum $enum): bool;
-
-    /**
-     * {@inheritDoc}
-     */
-    public function jsonSerialize(): string;
+    public function equals(string|BackedEnum|Enum $value): bool;
 }
