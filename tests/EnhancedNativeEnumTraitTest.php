@@ -40,6 +40,74 @@ class EnhancedNativeEnumTraitTest extends TestCase
     /**
      * @test
      */
+    public function fromValue_pureEnumValid()
+    {
+        $this->assertSame(NativePureEnum::SOME_VALUE, NativePureEnum::fromValue('SOME_VALUE'));
+    }
+
+    /**
+     * @test
+     */
+    public function fromValue_backedEnumValid()
+    {
+        $this->assertSame(NativeBackedEnum::SOME_VALUE, NativeBackedEnum::fromValue('some value'));
+    }
+    
+    /**
+     * @test
+     */
+    public function fromValue_pureEnumInvalid()
+    {
+        $this->expectError();
+        $this->expectErrorMessage('"UNKNOWN" is not a valid backing value for enum "Codeup\Enum\NativePureEnum"');
+        NativePureEnum::fromValue('UNKNOWN');
+    }
+
+    /**
+     * @test
+     */
+    public function fromValue_backedEnumInvalid()
+    {
+        $this->expectError();
+        $this->expectErrorMessage('"unknown" is not a valid backing value for enum "Codeup\Enum\NativeBackedEnum"');
+        NativeBackedEnum::fromValue('unknown');
+    }
+
+    /**
+     * @test
+     */
+    public function tryFromValue_pureEnumValid()
+    {
+        $this->assertSame(NativePureEnum::SOME_VALUE, NativePureEnum::tryFromValue('SOME_VALUE'));
+    }
+
+    /**
+     * @test
+     */
+    public function tryFromValue_backedEnumValid()
+    {
+        $this->assertSame(NativeBackedEnum::SOME_VALUE, NativeBackedEnum::tryFromValue('some value'));
+    }
+    
+    /**
+     * @test
+     */
+    public function tryFromValue_pureEnumInvalid()
+    {
+        $this->assertNull(NativePureEnum::tryFromValue('UNKNOWN'));
+    }
+
+    /**
+     * @test
+     */
+    public function tryFromValue_backedEnumInvalid()
+    {
+        $this->assertNull(NativeBackedEnum::tryFromValue('unknown'));
+    }
+
+    /**
+     * @test
+     */
     public function value_pureEnum()
     {
         $this->assertSame('SOME_VALUE', NativePureEnum::SOME_VALUE->value());

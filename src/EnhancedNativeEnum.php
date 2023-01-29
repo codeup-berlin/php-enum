@@ -20,6 +20,18 @@ interface EnhancedNativeEnum extends UnitEnum
     public function value(): string;
 
     /**
+     * @param string $value
+     * @return static
+     */
+    public static function fromValue(string $value): static;
+
+    /**
+     * @param string $value
+     * @return static|null
+     */
+    public static function tryFromValue(string $value): ?static;
+
+    /**
      * @param string|BackedEnum|UnitEnum|Enum $value
      * @return bool
      */
