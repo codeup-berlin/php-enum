@@ -7,6 +7,7 @@ namespace Codeup\Enum\Reflection;
 use BackedEnum;
 use ReflectionClass;
 use UnexpectedValueException;
+use UnitEnum;
 use ValueError;
 
 abstract class Enum implements \Codeup\Enum\Enum
@@ -74,13 +75,15 @@ abstract class Enum implements \Codeup\Enum\Enum
     }
 
     /**
-     * @param string|BackedEnum $value
+     * @param string|BackedEnum|UnitEnum $value
      * @return static
      * @throws ValueError
      */
-    public static function from(string|BackedEnum $value): static
+    public static function from(string|BackedEnum|UnitEnum $value): static
     {
-        $value = ($value instanceof BackedEnum) ? $value->value : $value;
+        $value = ($value instanceof BackedEnum) ? $value->value : (
+            ($value instanceof UnitEnum) ? $value->name : $value
+        );
         $class = get_called_class();
         if (!isset(self::$instances[$class][$value])) {
             self::$instances[$class][$value] = new static($value);
@@ -89,10 +92,10 @@ abstract class Enum implements \Codeup\Enum\Enum
     }
 
     /**
-     * @param string|BackedEnum $value
+     * @param string|BackedEnum|UnitEnum $value
      * @return static|null
      */
-    public static function tryFrom(string|BackedEnum $value): ?static
+    public static function tryFrom(string|BackedEnum|UnitEnum $value): ?static
     {
         try {
             return self::from($value);
@@ -110,10 +113,10 @@ abstract class Enum implements \Codeup\Enum\Enum
             $reflectedValues = [];
             $values = [];
             foreach ($reflection->getConstants() as $name => $case) {
-                if (!($case instanceof BackedEnum)) {
+                if (!($case instanceof UnitEnum)) {
                     throw new UnexpectedValueException("Constant \"$class::$name\" is not an enum.");
                 }
-                $value = $case->value;
+                $value = ($case instanceof BackedEnum) ? $case->value : $case->name;
                 if (isset($values[$value])) {
                     throw new UnexpectedValueException("Ambiguous enum value: $value");
                 }
@@ -127,7 +130,7 @@ abstract class Enum implements \Codeup\Enum\Enum
     }
 
     /**
-     * @return BackedEnum[]
+     * @return array<BackedEnum|UnitEnum>
      */
     public static function cases(): array
     {
@@ -145,14 +148,14 @@ abstract class Enum implements \Codeup\Enum\Enum
     }
 
     /**
-     * @param string|BackedEnum|\Codeup\Enum\Enum $value
+     * @param string|BackedEnum|UnitEnum|\Codeup\Enum\Enum $value
      * @return bool
      */
-    public function equals(string|BackedEnum|\Codeup\Enum\Enum $value): bool
+    public function equals(string|BackedEnum|UnitEnum|\Codeup\Enum\Enum $value): bool
     {
         if (is_string($value)) {
             return $value === $this->value;
-        } elseif ($value instanceof BackedEnum) {
+        } elseif ($value instanceof UnitEnum) {
             return $value === $this->case;
         } else {
             return $value === $this;

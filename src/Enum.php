@@ -6,25 +6,26 @@ namespace Codeup\Enum;
 
 use BackedEnum;
 use JsonSerializable;
+use UnitEnum;
 
 interface Enum extends JsonSerializable
 {
     /**
-     * @return BackedEnum[]
+     * @return array<BackedEnum|UnitEnum>
      */
     public static function cases(): array;
 
     /**
-     * @param string|BackedEnum $value
+     * @param string|BackedEnum|UnitEnum $value
      * @return static
      */
-    public static function from(string|BackedEnum $value): static;
+    public static function from(string|BackedEnum|UnitEnum $value): static;
 
     /**
-     * @param string|BackedEnum $value
+     * @param string|BackedEnum|UnitEnum $value
      * @return static|null
      */
-    public static function tryFrom(string|BackedEnum $value): ?static;
+    public static function tryFrom(string|BackedEnum|UnitEnum $value): ?static;
 
     /**
      * @return string
@@ -32,17 +33,17 @@ interface Enum extends JsonSerializable
     public function asString(): string;
 
     /**
-     * @return BackedEnum
+     * @return BackedEnum|UnitEnum
      */
-    public function asEnum(): BackedEnum;
+    public function asEnum(): BackedEnum|UnitEnum;
     /**
      * @return string[]
      */
     public static function values(): array;
 
     /**
-     * @param string|BackedEnum|Enum $value
+     * @param string|BackedEnum|UnitEnum|Enum $value
      * @return bool
      */
-    public function equals(string|BackedEnum|Enum $value): bool;
+    public function equals(string|BackedEnum|UnitEnum|Enum $value): bool;
 }

@@ -9,14 +9,21 @@ namespace Codeup\Enum;
 use Codeup\Enum\Reflection\Enum;
 use PHPUnit\Framework\TestCase;
 
-enum NativeEnum: string implements EnhancedNativeEnum {
+enum NativePureEnum implements EnhancedNativeEnum {
+    use EnhancedNativeEnumTrait;
+
+    case SOME_VALUE;
+    case ANOTHER_VALUE;
+}
+
+enum NativeBackedEnum: string implements EnhancedNativeEnum {
     use EnhancedNativeEnumTrait;
 
     case SOME_VALUE = 'some value';
     case ANOTHER_VALUE = 'another value';
 }
 
-enum DifferentNativeEnum: string implements EnhancedNativeEnum {
+enum DifferentNativeBackedEnum: string implements EnhancedNativeEnum {
     use EnhancedNativeEnumTrait;
 
     case DIFFERENT_VALUE = 'different value';
@@ -24,8 +31,8 @@ enum DifferentNativeEnum: string implements EnhancedNativeEnum {
 
 class PartialEnum extends Enum
 {
-    const SOME_VALUE = NativeEnum::SOME_VALUE;
-    const DIFFERENT_VALUE = DifferentNativeEnum::DIFFERENT_VALUE;
+    const SOME_VALUE = NativeBackedEnum::SOME_VALUE;
+    const DIFFERENT_VALUE = DifferentNativeBackedEnum::DIFFERENT_VALUE;
 }
 
 class EnhancedNativeEnumTraitTest extends TestCase
@@ -33,17 +40,35 @@ class EnhancedNativeEnumTraitTest extends TestCase
     /**
      * @test
      */
-    public function values_valid()
+    public function values_pureEnum()
     {
-        $this->assertSame(['some value', 'another value'], NativeEnum::values());
+        $this->assertSame(['SOME_VALUE', 'ANOTHER_VALUE'], NativePureEnum::values());
     }
 
     /**
      * @test
      */
-    public function equals_matchingString()
+    public function values_backedEnum()
     {
-        $enum = NativeEnum::SOME_VALUE;
+        $this->assertSame(['some value', 'another value'], NativeBackedEnum::values());
+    }
+
+    /**
+     * @test
+     */
+    public function equals_pureEnumMatchesPureValue()
+    {
+        $enum = NativePureEnum::SOME_VALUE;
+        $result = $enum->equals('SOME_VALUE');
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @test
+     */
+    public function equals_backedEnumMatchesBackedValue()
+    {
+        $enum = NativeBackedEnum::SOME_VALUE;
         $result = $enum->equals('some value');
         $this->assertTrue($result);
     }
@@ -51,20 +76,30 @@ class EnhancedNativeEnumTraitTest extends TestCase
     /**
      * @test
      */
-    public function equals_matchingBackedEnum()
+    public function equals_backedEnumMatchesPureValue_notEquals()
     {
-        $enum = NativeEnum::SOME_VALUE;
-        $result = $enum->equals(NativeEnum::SOME_VALUE);
+        $enum = NativeBackedEnum::SOME_VALUE;
+        $result = $enum->equals('SOME_VALUE');
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @test
+     */
+    public function equals_backedEnumMatchesBackedEnum()
+    {
+        $enum = NativeBackedEnum::SOME_VALUE;
+        $result = $enum->equals(NativeBackedEnum::SOME_VALUE);
         $this->assertTrue($result);
     }
 
     /**
      * @test
      */
-    public function equals_matchingEnum()
+    public function equals_backedEnumMatchesEnum()
     {
-        $enum = NativeEnum::SOME_VALUE;
-        $enum2 = PartialEnum::from(NativeEnum::SOME_VALUE);
+        $enum = NativeBackedEnum::SOME_VALUE;
+        $enum2 = PartialEnum::from(NativeBackedEnum::SOME_VALUE);
         $result = $enum->equals($enum2);
         $this->assertTrue($result);
     }
@@ -72,9 +107,9 @@ class EnhancedNativeEnumTraitTest extends TestCase
     /**
      * @test
      */
-    public function equals_differentString()
+    public function equals_backedEnumDifferentValue()
     {
-        $enum = NativeEnum::SOME_VALUE;
+        $enum = NativeBackedEnum::SOME_VALUE;
         $result = $enum->equals('unknown');
         $this->assertFalse($result);
     }
@@ -82,10 +117,10 @@ class EnhancedNativeEnumTraitTest extends TestCase
     /**
      * @test
      */
-    public function equals_differentBackedEnum()
+    public function equals_backedEnumDifferentBackedEnum()
     {
-        $enum = NativeEnum::SOME_VALUE;
-        $result = $enum->equals(NativeEnum1::ANOTHER_VALUE);
+        $enum = NativeBackedEnum::SOME_VALUE;
+        $result = $enum->equals(NativeBackedEnum1::ANOTHER_VALUE);
         $this->assertFalse($result);
     }
 
@@ -94,8 +129,8 @@ class EnhancedNativeEnumTraitTest extends TestCase
      */
     public function equals_differentEnum()
     {
-        $enum = NativeEnum::SOME_VALUE;
-        $enum2 = PartialEnum::from(DifferentNativeEnum::DIFFERENT_VALUE);
+        $enum = NativeBackedEnum::SOME_VALUE;
+        $enum2 = PartialEnum::from(DifferentNativeBackedEnum::DIFFERENT_VALUE);
         $result = $enum->equals($enum2);
         $this->assertFalse($result);
     }

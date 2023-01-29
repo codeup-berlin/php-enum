@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Codeup\Enum;
 
 use BackedEnum;
+use UnitEnum;
 
 trait EnhancedNativeEnumTrait
 {
@@ -13,21 +14,23 @@ trait EnhancedNativeEnumTrait
      */
     public static function values(): array
     {
+        $isBacked = is_a(get_called_class(), BackedEnum::class, true);
         $result = [];
         foreach (self::cases() as $case) {
-            $result[] = $case->value;
+            $result[] = $isBacked ? $case->value : $case->name;
         }
         return $result;
     }
 
     /**
-     * @param string|BackedEnum|Enum $value
+     * @param string|BackedEnum|UnitEnum|Enum $value
      * @return bool
      */
-    public function equals(string|BackedEnum|Enum $value): bool
+    public function equals(string|BackedEnum|UnitEnum|Enum $value): bool
     {
         if (is_string($value)) {
-            return $value === $this->value;
+            $isBacked = $this instanceof BackedEnum;
+            return $value === ($isBacked ? $this->value : $this->name);
         } elseif ($value instanceof Enum) {
             return $value->asEnum() === $this;
         } else {
