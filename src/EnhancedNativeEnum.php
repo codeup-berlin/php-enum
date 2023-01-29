@@ -15,6 +15,11 @@ interface EnhancedNativeEnum extends UnitEnum
     public static function values(): array;
 
     /**
+     * @return string
+     */
+    public function value(): string;
+
+    /**
      * @param string|BackedEnum|UnitEnum|Enum $value
      * @return bool
      */

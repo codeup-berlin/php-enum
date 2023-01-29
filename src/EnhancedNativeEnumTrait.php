@@ -23,14 +23,21 @@ trait EnhancedNativeEnumTrait
     }
 
     /**
+     * @return string
+     */
+    public function value(): string
+    {
+        return ($this instanceof BackedEnum) ? $this->value : $this->name;
+    }
+
+    /**
      * @param string|BackedEnum|UnitEnum|Enum $value
      * @return bool
      */
     public function equals(string|BackedEnum|UnitEnum|Enum $value): bool
     {
         if (is_string($value)) {
-            $isBacked = $this instanceof BackedEnum;
-            return $value === ($isBacked ? $this->value : $this->name);
+            return $this->value() === $value;
         } elseif ($value instanceof Enum) {
             return $value->asEnum() === $this;
         } else {

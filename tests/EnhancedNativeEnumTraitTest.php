@@ -40,6 +40,22 @@ class EnhancedNativeEnumTraitTest extends TestCase
     /**
      * @test
      */
+    public function value_pureEnum()
+    {
+        $this->assertSame('SOME_VALUE', NativePureEnum::SOME_VALUE->value());
+    }
+
+    /**
+     * @test
+     */
+    public function value_backedEnum()
+    {
+        $this->assertSame('some value', NativeBackedEnum::SOME_VALUE->value());
+    }
+
+    /**
+     * @test
+     */
     public function values_pureEnum()
     {
         $this->assertSame(['SOME_VALUE', 'ANOTHER_VALUE'], NativePureEnum::values());
