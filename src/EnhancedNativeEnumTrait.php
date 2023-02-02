@@ -99,4 +99,12 @@ trait EnhancedNativeEnumTrait
             return $value === $this;
         }
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): string
+    {
+        return $this->value();
+    }
 }

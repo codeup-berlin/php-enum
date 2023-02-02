@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Codeup\Enum;
 
 use BackedEnum;
+use JsonSerializable;
 use UnitEnum;
 
-interface EnhancedNativeEnum extends UnitEnum
+interface EnhancedNativeEnum extends UnitEnum, JsonSerializable
 {
     /**
      * @return string[]

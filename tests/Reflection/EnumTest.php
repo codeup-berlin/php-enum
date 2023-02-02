@@ -312,6 +312,24 @@ class EnumTest extends TestCase
 
     /**
      * @test
+     */
+    public function jsonSerialize_pureEnum()
+    {
+        $result = json_encode(NativePureEnum1::SOME_VALUE);
+        $this->assertSame('"SOME_VALUE"', $result);
+    }
+
+    /**
+     * @test
+     */
+    public function jsonSerialize_backedEnum()
+    {
+        $result = json_encode(NativeBackedEnum1::SOME_VALUE);
+        $this->assertSame('"some value 1"', $result);
+    }
+
+    /**
+     * @test
      * @dataProvider provideEnumCases
      */
     public function cases_valid(string $enumClass, array $expectedCases)
