@@ -67,6 +67,14 @@ abstract class Enum implements \Codeup\Enum\Enum
     }
 
     /**
+     * @return string
+     */
+    public function value(): string
+    {
+        return $this->value;
+    }
+
+    /**
      * @return BackedEnum
      */
     public function asEnum(): BackedEnum
@@ -92,6 +100,15 @@ abstract class Enum implements \Codeup\Enum\Enum
     }
 
     /**
+     * @param string $value
+     * @return static
+     */
+    public static function fromValue(string $value): static
+    {
+        return static::from($value);
+    }
+
+    /**
      * @param string|BackedEnum|UnitEnum $value
      * @return static|null
      */
@@ -102,6 +119,15 @@ abstract class Enum implements \Codeup\Enum\Enum
         } catch (ValueError) {
             return null;
         }
+    }
+
+    /**
+     * @param string $value
+     * @return static|null
+     */
+    public static function tryFromValue(string $value): ?static
+    {
+        return static::tryFrom($value);
     }
 
     private static function initReflection(): void

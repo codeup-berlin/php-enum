@@ -50,7 +50,7 @@ trait EnhancedNativeEnumTrait
             return constant("self::$value");
         } catch (Throwable) {
             $class = get_called_class();
-            throw new ValueError("\"$value\" is not a valid backing value for enum \"$class\"");
+            throw new ValueError("\"$value\" is not a valid backing value for enum $class");
         }
     }
 

@@ -22,20 +22,39 @@ interface Enum extends JsonSerializable
     public static function from(string|BackedEnum|UnitEnum $value): static;
 
     /**
+     * @param string $value
+     * @return static
+     */
+    public static function fromValue(string $value): static;
+
+    /**
      * @param string|BackedEnum|UnitEnum $value
      * @return static|null
      */
     public static function tryFrom(string|BackedEnum|UnitEnum $value): ?static;
 
     /**
+     * @param string $value
+     * @return static|null
+     */
+    public static function tryFromValue(string $value): ?static;
+
+    /**
      * @return string
+     * @deprecated in favor of value()
      */
     public function asString(): string;
+
+    /**
+     * @return string
+     */
+    public function value(): string;
 
     /**
      * @return BackedEnum|UnitEnum
      */
     public function asEnum(): BackedEnum|UnitEnum;
+
     /**
      * @return string[]
      */

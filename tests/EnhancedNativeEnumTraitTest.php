@@ -8,6 +8,7 @@ namespace Codeup\Enum;
 
 use Codeup\Enum\Reflection\Enum;
 use PHPUnit\Framework\TestCase;
+use ValueError;
 
 enum NativePureEnum implements EnhancedNativeEnum {
     use EnhancedNativeEnumTrait;
@@ -52,14 +53,14 @@ class EnhancedNativeEnumTraitTest extends TestCase
     {
         $this->assertSame(NativeBackedEnum::SOME_VALUE, NativeBackedEnum::fromValue('some value'));
     }
-    
+
     /**
      * @test
      */
     public function fromValue_pureEnumInvalid()
     {
-        $this->expectError();
-        $this->expectErrorMessage('"UNKNOWN" is not a valid backing value for enum "Codeup\Enum\NativePureEnum"');
+        $this->expectException(ValueError::class);
+        $this->expectExceptionMessage('"UNKNOWN" is not a valid backing value for enum Codeup\Enum\NativePureEnum');
         NativePureEnum::fromValue('UNKNOWN');
     }
 
@@ -68,8 +69,8 @@ class EnhancedNativeEnumTraitTest extends TestCase
      */
     public function fromValue_backedEnumInvalid()
     {
-        $this->expectError();
-        $this->expectErrorMessage('"unknown" is not a valid backing value for enum "Codeup\Enum\NativeBackedEnum"');
+        $this->expectException(ValueError::class);
+        $this->expectExceptionMessage('"unknown" is not a valid backing value for enum Codeup\Enum\NativeBackedEnum');
         NativeBackedEnum::fromValue('unknown');
     }
 
@@ -88,7 +89,7 @@ class EnhancedNativeEnumTraitTest extends TestCase
     {
         $this->assertSame(NativeBackedEnum::SOME_VALUE, NativeBackedEnum::tryFromValue('some value'));
     }
-    
+
     /**
      * @test
      */
